@@ -1,8 +1,11 @@
 package main
 
 import (
+	"changeme/http_handling"
 	"context"
-	"fmt"
+	"io"
+	"net/http"
+	"time"
 )
 
 // App struct
@@ -21,7 +24,23 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+func (a *App) Query(url string) http_handling.Response {
+	resp, err := http.Get(url)
+	if err != nil {
+		return http_handling.Response{
+			Code: resp.StatusCode,
+			Body: "",
+			Err:  err,
+			Time: time.Second,
+		}
+	}
+
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	return http_handling.Response{
+		Code: resp.StatusCode,
+		Body: string(body[:]),
+		Err:  err,
+		Time: time.Second,
+	}
 }
