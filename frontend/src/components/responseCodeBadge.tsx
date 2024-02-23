@@ -1,5 +1,3 @@
-import React from "react";
-
 enum COLOR_CLASSES {
   DEFAULT = 'badge-neutral',
   INFO = 'badge-info',
@@ -27,7 +25,7 @@ export const ResponseCodeBadge = (props: { code: number }) => {
 
   return (
     <div className={`badge badge-lg ${statusCodeClass} badge-outline font-mono`}>
-      {props.code ?? "000"}
+      {props.code ? props.code : "000"}
     </div>
   )
 }
