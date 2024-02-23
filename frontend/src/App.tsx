@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { Query } from "../wailsjs/go/main/App";
 import { ReponseType } from "./types/http";
+import { ResponseCodeBadge } from "./components/responseCodeBadge";
 
 function App() {
   const [url, setUrl] = useState<string>("https://catfact.ninja/fact");
@@ -22,7 +23,7 @@ function App() {
         <option selected>GET</option>
         <option>POST</option>
         <option>PUT</option>
-      </select>
+    </select>
       <input
         onChange={(e) => setUrl(e.target.value)}
         value={url}
@@ -36,9 +37,7 @@ function App() {
       <div className="flex my-10">
         <div className="w-1/2">Test</div>
         <div className="w-1/2">
-          <div className="badge badge-primary badge-outline">
-            {result.Code > 0 ? result.Code : ""}
-          </div>
+          <ResponseCodeBadge code={result.Code} />
           <div className="overflow-x-auto">{result.Body}</div>
         </div>
       </div>
