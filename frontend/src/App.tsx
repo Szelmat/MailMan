@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import { Query } from "../wailsjs/go/main/App";
 import { ReponseType } from "./types/http";
 import { ResponseCodeBadge } from "./components/responseCodeBadge";
@@ -39,7 +38,7 @@ function App() {
         <div className="w-1/2">Test</div>
         <div className="w-1/2 flex flex-col w-full place-items-center mx-10">
           <ResponseCodeBadge code={result.Code} />
-          <ReponseBodyContent content={result.Body} />
+          <ReponseBodyContent key="body" content={result.Body} />
         </div>
       </div>
     </div>

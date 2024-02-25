@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
-import { getFormattedJSON } from "../util/stringFormat";
+import 'react-json-view-lite/dist/index.css';
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.css';
 
 enum TABS {
   RAW = 'Raw',
@@ -7,31 +10,20 @@ enum TABS {
 }
 
 export const ReponseBodyContent = (props: { content: string }) => {
-  const [ content, setContent ] = useState<string>(props.content);
-  const [ activeTab, setActiveTab ] = useState<TABS>(TABS.RAW)
+  const [ activeTab, setActiveTab ] = useState<TABS>(TABS.RAW);
+
+  hljs.configure({ cssSelector: 'code' });
 
   useEffect(() => {
-    setContent(formatContent());
-  }, [props.content]);
-
-  useEffect(() => {
-    setContent(formatContent())
-  }, [activeTab])
-
-  const formatContent = (): string => {
-    switch(activeTab) {
-      case TABS.JSON:
-        return getFormattedJSON(props.content) ?? '';
-      default:
-        return props.content;
-    }
-  }
+    delete document.querySelector('code')?.dataset.highlighted
+    hljs.highlightAll();
+  }, [props.content, activeTab]);
 
   return (
-    <div className="w-full m-5">
+    <div className="w-full m-5 text-left">
       <div role="tablist" className="tabs tabs-bordered tabs-xs">
         {Object.keys(TABS).map(tabKey => {
-          const currTab = TABS[tabKey as keyof TABS]
+          const currTab = TABS[tabKey as keyof typeof TABS];
           return (
             <a role="tab"
               className={"tab" + (activeTab === currTab ? " tab-active" : "")}
@@ -45,7 +37,13 @@ export const ReponseBodyContent = (props: { content: string }) => {
           )
         })}
       </div>
-      <textarea className="textarea textarea-bordered w-full mt-5" value={content} spellCheck="false" readOnly rows={10} />
+      {activeTab === TABS.JSON ? (
+        <div className="mt-5 w-full max-w-1/2" style="background-color:#282c34;">
+            <code className="language-json whitespace-pre-wrap">{JSON.stringify(JSON.parse(props.content), null, 2)}</code>
+        </div>
+      ):(
+        <textarea className="textarea textarea-bordered w-full mt-5" value={props.content} spellCheck="false" readOnly rows={10} />
+      )}
     </div>
   )
 }
