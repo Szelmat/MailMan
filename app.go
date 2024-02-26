@@ -25,13 +25,16 @@ func (a *App) startup(ctx context.Context) {
 }
 
 func (a *App) Query(url string) http_handling.Response {
+  startTime := time.Now()
 	resp, err := http.Get(url)
+  endTime := time.Now()
+
 	if err != nil {
 		return http_handling.Response{
 			Code: resp.StatusCode,
 			Body: "",
 			Err:  err,
-			Time: time.Second,
+			Time: time.Millisecond,
 		}
 	}
 
@@ -41,6 +44,6 @@ func (a *App) Query(url string) http_handling.Response {
 		Code: resp.StatusCode,
 		Body: string(body[:]),
 		Err:  err,
-		Time: time.Second,
+		Time: time.Duration(endTime.Sub(startTime).Milliseconds()),
 	}
 }

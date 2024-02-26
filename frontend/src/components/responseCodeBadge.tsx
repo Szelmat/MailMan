@@ -24,7 +24,7 @@ export const ResponseCodeBadge = (props: { code: number }) => {
   const statusCodeClass = getColorClass(props.code);
 
   return (
-    <div className={`badge badge-lg ${statusCodeClass} badge-outline font-mono`}>
+    <div className={`badge badge-md ${statusCodeClass} badge-outline font-mono`}>
       {props.code ? props.code : "000"}
     </div>
   )
