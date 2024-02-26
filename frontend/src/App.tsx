@@ -38,7 +38,7 @@ function App() {
         <div className="w-1/2 opacity-0">Test</div>
         <div className="w-1/2 flex flex-col w-full place-items-center mx-10">
           <div className="flex w-full justify-between">
-            <span className="badge">{result.Time ?? 0} ms</span>
+            <span className="badge badge-sm">{result.Time ?? 0} ms</span>
             <ResponseCodeBadge code={result.Code} />
           </div>
           <ReponseBodyContent key="body" content={result.Body} />

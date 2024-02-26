@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import 'highlight.js/styles/atom-one-dark.css';
 import 'react18-json-view/src/style.css'
 import JsonView from "react18-json-view";
 import 'react18-json-view/src/dark.css';
@@ -34,6 +33,7 @@ export const ReponseBodyContent = (props: { content: string }) => {
       <div className="mt-5">
         {activeTab === TABS.JSON ? (
           <JsonView
+            className="text-sm font-mono"
             dark
             enableClipboard
             src={JSON.parse(props.content ? props.content : '{}')}
@@ -41,7 +41,10 @@ export const ReponseBodyContent = (props: { content: string }) => {
             collapseStringsAfterLength={300}
           />
         ):(
-          <textarea className="textarea textarea-bordered w-full" value={props.content} spellCheck="false" readOnly rows={10} />
+          <textarea 
+            className="textarea textarea-bordered w-full text-sm font-mono"
+            value={props.content} spellCheck="false" readOnly rows={10}
+          />
         )}
       </div>
     </div>
