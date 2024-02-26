@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import 'react-json-view-lite/dist/index.css';
-import hljs from 'highlight.js';
+import { useState } from "react"
 
 import 'highlight.js/styles/atom-one-dark.css';
+import 'react18-json-view/src/style.css'
+import JsonView from "react18-json-view";
+import 'react18-json-view/src/dark.css';
 
 enum TABS {
   RAW = 'Raw',
@@ -11,13 +12,6 @@ enum TABS {
 
 export const ReponseBodyContent = (props: { content: string }) => {
   const [ activeTab, setActiveTab ] = useState<TABS>(TABS.RAW);
-
-  hljs.configure({ cssSelector: 'code' });
-
-  useEffect(() => {
-    delete document.querySelector('code')?.dataset.highlighted
-    hljs.highlightAll();
-  }, [props.content, activeTab]);
 
   return (
     <div className="w-full m-5 text-left">
@@ -37,13 +31,19 @@ export const ReponseBodyContent = (props: { content: string }) => {
           )
         })}
       </div>
-      {activeTab === TABS.JSON ? (
-        <div className="mt-5 w-full max-w-1/2" style="background-color:#282c34;">
-            <code className="language-json whitespace-pre-wrap">{JSON.stringify(JSON.parse(props.content), null, 2)}</code>
-        </div>
-      ):(
-        <textarea className="textarea textarea-bordered w-full mt-5" value={props.content} spellCheck="false" readOnly rows={10} />
-      )}
+      <div className="mt-5">
+        {activeTab === TABS.JSON ? (
+          <JsonView
+            dark
+            enableClipboard
+            src={JSON.parse(props.content ? props.content : '{}')}
+            theme="atom"
+            collapseStringsAfterLength={300}
+          />
+        ):(
+          <textarea className="textarea textarea-bordered w-full" value={props.content} spellCheck="false" readOnly rows={10} />
+        )}
+      </div>
     </div>
   )
 }
