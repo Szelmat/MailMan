@@ -1,9 +1,9 @@
 enum COLOR_CLASSES {
-  DEFAULT = 'badge-neutral',
-  INFO = 'badge-info',
-  SUCCESS = 'badge-success',
-  REDIRECT = 'badge-warning',
-  ERROR = 'badge-error',
+  DEFAULT = 'neutral',
+  INFO = 'info',
+  SUCCESS = 'success',
+  REDIRECT = 'warning',
+  ERROR = 'error',
 }
 
 const getColorClass = (code: number | null) => {
@@ -20,12 +20,14 @@ const getColorClass = (code: number | null) => {
   }
 }
 
-export const ResponseCodeBadge = (props: { code: number }) => {
+export const ResponseCodeBadge = (props: { code: number, status: string }) => {
   const statusCodeClass = getColorClass(props.code);
 
   return (
-    <div className={`badge badge-md ${statusCodeClass} badge-outline font-mono`}>
-      {props.code ? props.code : "000"}
+    <div className={`tooltip tooltip-${statusCodeClass} tooltip-bottom font-mono`} data-tip={props.status}>
+      <div className={`badge badge-md badge-${statusCodeClass} badge-outline font-mono`}>
+        {props.code ? props.code : "000"}
+      </div>
     </div>
   )
 }

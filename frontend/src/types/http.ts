@@ -1,11 +1,12 @@
 export type ReponseType = {
   Code: number;
+  Status: string;
   Body: string;
   Error: any;
   Time: any;
   Size: {
     Sum: number,
-    HeaderSize: number,
-    BodySize: number,
+    Header: number,
+    Body: number,
   };
 };

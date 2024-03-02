@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Query } from "../wailsjs/go/main/App";
 import { ReponseType } from "./types/http";
-import { ResponseCodeBadge } from "./components/responseCodeBadge";
+import { ResponseCodeBadge } from "./components/badges/ResponseCodeBadge";
 import { ReponseBodyContent } from "./components/responseBodyContent";
+import { ResponseSizeBadge } from "./components/badges/ResponseSizeBadge";
 
 function App() {
   const [url, setUrl] = useState<string>("https://catfact.ninja/fact");
-  const [result, setResult] = useState<ReponseType>({
+  const [response, setResponse] = useState<ReponseType>({
     Code: 0,
+    Status: "",
     Body: "",
     Error: null,
     Time: null,
     Size: {
       Sum: 0,
-      HeaderSize: 0,
-      BodySize: 0,
+      Header: 0,
+      Body: 0,
     },
   });
 
   const query = (url: string) => {
-    Query(url).then((data: ReponseType) => setResult(data));
+    Query(url).then((data: ReponseType) => setResponse(data));
   };
 
   return (
@@ -43,11 +45,11 @@ function App() {
         <div className="w-1/2 opacity-0">Test</div>
         <div className="w-1/2 flex flex-col w-full place-items-center mx-10">
           <div className="flex w-full justify-between">
-            <span className="badge badge-sm font-mono">{result.Time ?? 0} ms</span>
-            <span className="badge badge-sm font-mono">{result.Size.Sum ?? 0} KB</span>
-            <ResponseCodeBadge code={result.Code} />
+            <span className="badge badge-sm font-mono">{response.Time ?? 0} ms</span>
+            <ResponseSizeBadge size={response.Size} />
+            <ResponseCodeBadge code={response.Code} status={response.Status} />
           </div>
-          <ReponseBodyContent key="body" content={result.Body} />
+          <ReponseBodyContent key="body" content={response.Body} />
         </div>
       </div>
     </div>

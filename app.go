@@ -50,13 +50,14 @@ func (a *App) Query(url string) http_handling.Response {
 
 	return http_handling.Response{
 		Code: resp.StatusCode,
+    Status: resp.Status,
 		Body: string(body),
 		Err:  err,
 		Time: time.Duration(endTime.Sub(startTime).Milliseconds()),
     Size: http_handling.ResponseSizes{
       Sum: util.FormatTwoDecimalPlaces(headerSizeKb + bodySizeKb),
-      HeaderSize: util.FormatTwoDecimalPlaces(headerSizeKb),
-      BodySize: util.FormatTwoDecimalPlaces(bodySizeKb),
+      Header: util.FormatTwoDecimalPlaces(headerSizeKb),
+      Body: util.FormatTwoDecimalPlaces(bodySizeKb),
     },
 	}
 }
