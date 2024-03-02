@@ -2,7 +2,9 @@ package main
 
 import (
 	"changeme/http_handling"
+	"changeme/util"
 	"context"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -39,11 +41,22 @@ func (a *App) Query(url string) http_handling.Response {
 	}
 
 	defer resp.Body.Close()
+
 	body, err := io.ReadAll(resp.Body)
+  header := fmt.Sprintf("%v", resp.Header)
+
+  bodySizeKb := http_handling.CalcSizeKb(string(body))
+  headerSizeKb := http_handling.CalcSizeKb(string(header))  
+
 	return http_handling.Response{
 		Code: resp.StatusCode,
-		Body: string(body[:]),
+		Body: string(body),
 		Err:  err,
 		Time: time.Duration(endTime.Sub(startTime).Milliseconds()),
+    Size: http_handling.ResponseSizes{
+      Sum: util.FormatTwoDecimalPlaces(headerSizeKb + bodySizeKb),
+      HeaderSize: util.FormatTwoDecimalPlaces(headerSizeKb),
+      BodySize: util.FormatTwoDecimalPlaces(bodySizeKb),
+    },
 	}
 }

@@ -11,6 +11,11 @@ function App() {
     Body: "",
     Error: null,
     Time: null,
+    Size: {
+      Sum: 0,
+      HeaderSize: 0,
+      BodySize: 0,
+    },
   });
 
   const query = (url: string) => {
@@ -38,7 +43,8 @@ function App() {
         <div className="w-1/2 opacity-0">Test</div>
         <div className="w-1/2 flex flex-col w-full place-items-center mx-10">
           <div className="flex w-full justify-between">
-            <span className="badge badge-sm">{result.Time ?? 0} ms</span>
+            <span className="badge badge-sm font-mono">{result.Time ?? 0} ms</span>
+            <span className="badge badge-sm font-mono">{result.Size.Sum ?? 0} KB</span>
             <ResponseCodeBadge code={result.Code} />
           </div>
           <ReponseBodyContent key="body" content={result.Body} />
