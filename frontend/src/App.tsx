@@ -4,6 +4,7 @@ import { ReponseType } from "./types/http";
 import { ResponseCodeBadge } from "./components/badges/ResponseCodeBadge";
 import { ReponseBodyContent } from "./components/responseBodyContent";
 import { ResponseSizeBadge } from "./components/badges/ResponseSizeBadge";
+import { ResponseHeaderDisplay } from "./components/ResponseHeaderDisplay";
 
 function App() {
   const [url, setUrl] = useState<string>("https://catfact.ninja/fact");
@@ -49,6 +50,7 @@ function App() {
             <ResponseSizeBadge size={response.Size} />
             <ResponseCodeBadge code={response.Code} status={response.Status} />
           </div>
+          <ResponseHeaderDisplay />
           <ReponseBodyContent key="body" content={response.Body} />
         </div>
       </div>
