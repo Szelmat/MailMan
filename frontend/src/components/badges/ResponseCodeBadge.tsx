@@ -1,3 +1,5 @@
+import { Status } from "../../types/http";
+
 enum COLOR_CLASSES {
   DEFAULT = 'neutral',
   INFO = 'info',
@@ -20,13 +22,13 @@ const getColorClass = (code: number | null) => {
   }
 }
 
-export const ResponseCodeBadge = (props: { code: number, status: string }) => {
-  const statusCodeClass = getColorClass(props.code);
+export const ResponseCodeBadge = (props: { status: Status }) => {
+  const statusCodeClass = getColorClass(props.status.Code);
 
   return (
-    <div className={`tooltip tooltip-${statusCodeClass} tooltip-bottom font-mono`} data-tip={props.status}>
+    <div className={`tooltip tooltip-${statusCodeClass} tooltip-bottom font-mono`} data-tip={props.status.Message}>
       <div className={`badge badge-md badge-${statusCodeClass} badge-outline font-mono`}>
-        {props.code ? props.code : "000"}
+        {props.status.Code ? props.status.Code : "000"}
       </div>
     </div>
   )

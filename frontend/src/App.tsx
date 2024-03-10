@@ -9,8 +9,10 @@ import { ResponseHeaderDisplay } from "./components/ResponseHeaderDisplay";
 function App() {
   const [url, setUrl] = useState<string>("https://catfact.ninja/fact");
   const [response, setResponse] = useState<ReponseType>({
-    Code: 0,
-    Status: "",
+    Status: {
+      Code: 0,
+      Message: "",
+    },
     Body: "",
     Error: null,
     Time: null,
@@ -26,7 +28,7 @@ function App() {
   };
 
   return (
-    <div id="App" className="my-8">
+    <div id="App" className="my-8 overflow-hidden">
       <select className="select select-bordered select-xs max-w-xs mx-1 " disabled>
         <option selected>GET</option>
         <option>POST</option>
@@ -46,9 +48,9 @@ function App() {
         <div className="w-1/2 opacity-0">Test</div>
         <div className="w-1/2 flex flex-col w-full place-items-center mx-10">
           <div className="flex w-full justify-between">
-            <span className="badge badge-sm font-mono">{response.Time ?? 0} ms</span>
+            <span className="badge badge-sm font-mono h-full">{response.Time ?? 0} ms</span>
             <ResponseSizeBadge size={response.Size} />
-            <ResponseCodeBadge code={response.Code} status={response.Status} />
+            <ResponseCodeBadge status={response.Status} />
           </div>
           <ResponseHeaderDisplay />
           <ReponseBodyContent key="body" content={response.Body} />

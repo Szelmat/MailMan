@@ -1,6 +1,10 @@
+export type Status = {
+  Code: number,
+  Message: string,
+}
+
 export type ReponseType = {
-  Code: number;
-  Status: string;
+  Status: Status;
   Body: string;
   Error: any;
   Time: any;

@@ -33,7 +33,10 @@ func (a *App) Query(url string) http_handling.Response {
 
 	if err != nil {
 		return http_handling.Response{
-			Code: resp.StatusCode,
+      Status: http_handling.Status{
+        Code: resp.StatusCode,
+        Message: resp.Status,
+      },
 			Body: "",
 			Err:  err,
 			Time: time.Millisecond,
@@ -49,8 +52,10 @@ func (a *App) Query(url string) http_handling.Response {
   headerSizeKb := http_handling.CalcSizeKb(string(header))  
 
 	return http_handling.Response{
-		Code: resp.StatusCode,
-    Status: resp.Status,
+    Status: http_handling.Status{
+      Code: resp.StatusCode,
+      Message: resp.Status,
+    },
 		Body: string(body),
 		Err:  err,
 		Time: time.Duration(endTime.Sub(startTime).Milliseconds()),

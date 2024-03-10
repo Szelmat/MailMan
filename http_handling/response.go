@@ -8,9 +8,13 @@ type ResponseSizes struct {
   Body float64
 }
 
+type Status struct {
+  Code int
+  Message string
+}
+
 type Response struct {
-	Code int
-  Status string
+  Status Status
 	Body string
 	Err  error
 	Time time.Duration
