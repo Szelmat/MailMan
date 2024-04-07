@@ -15,6 +15,7 @@ type Status struct {
 
 type Response struct {
   Status Status
+  Headers map[string]string
 	Body string
 	Err  error
 	Time time.Duration

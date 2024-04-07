@@ -13,6 +13,7 @@ function App() {
       Code: 0,
       Message: "",
     },
+    Headers: {},
     Body: "",
     Error: null,
     Time: null,
@@ -52,7 +53,7 @@ function App() {
             <ResponseSizeBadge size={response.Size} />
             <ResponseCodeBadge status={response.Status} />
           </div>
-          <ResponseHeaderDisplay />
+          <ResponseHeaderDisplay headers={response.Headers} />
           <ReponseBodyContent key="body" content={response.Body} />
         </div>
       </div>

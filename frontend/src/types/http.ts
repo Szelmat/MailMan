@@ -3,8 +3,13 @@ export type Status = {
   Message: string,
 }
 
+export type Headers = {
+  [key: string]: string,
+}
+
 export type ReponseType = {
   Status: Status;
+  Headers: Headers;
   Body: string;
   Error: any;
   Time: any;
